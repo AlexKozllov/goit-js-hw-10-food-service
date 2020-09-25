@@ -15,38 +15,32 @@ const postItem = template(menu);
 
 jsMmenu.insertAdjacentHTML("afterbegin", postItem);
 
-if (!localStorage.getItem("currentTheme")) {
-  ThemeLight();
+const currentTheme = localStorage.getItem("currentTheme");
+
+if (!currentTheme) {
+  changeTheme(Theme.DARK, Theme.LIGHT);
 }
-if (localStorage.getItem("currentTheme") === `${Theme.LIGHT}`) {
-  ThemeLight();
-}
-if (localStorage.getItem("currentTheme") === `${Theme.DARK}`) {
-  ThemeDark();
+
+if (currentTheme === `${Theme.DARK}`) {
+  changeTheme(Theme.LIGHT, Theme.DARK);
+} else {
+  changeTheme(Theme.DARK, Theme.LIGHT);
 }
 
 themeSwitchToggle.addEventListener("click", hendelThemeToggle);
 
 function hendelThemeToggle() {
-  if (localStorage.getItem("currentTheme") === `${Theme.LIGHT}`) {
-    ThemeDark();
-    return;
-  }
-  if (localStorage.getItem("currentTheme") === `${Theme.DARK}`) {
-    ThemeLight();
-    return;
+  const currentTheme = localStorage.getItem("currentTheme");
+  if (currentTheme === `${Theme.DARK}`) {
+    changeTheme(Theme.DARK, Theme.LIGHT);
+  } else {
+    changeTheme(Theme.LIGHT, Theme.DARK);
   }
 }
 
-function ThemeLight() {
-  body.classList.remove(`${Theme.DARK}`);
-  body.classList.add(`${Theme.LIGHT}`);
-  localStorage.setItem("currentTheme", `${Theme.LIGHT}`);
-  themeSwitchToggle.checked = false;
-}
-function ThemeDark() {
-  body.classList.remove(`${Theme.LIGHT}`);
-  body.classList.add(`${Theme.DARK}`);
-  localStorage.setItem("currentTheme", `${Theme.DARK}`);
-  themeSwitchToggle.checked = true;
+function changeTheme(oldTheme, newTheme) {
+  body.classList.remove(`${oldTheme}`);
+  body.classList.add(`${newTheme}`);
+  localStorage.setItem("currentTheme", `${newTheme}`);
+  themeSwitchToggle.checked = newTheme === Theme.DARK;
 }
