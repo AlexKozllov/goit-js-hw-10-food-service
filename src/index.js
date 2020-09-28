@@ -17,11 +17,7 @@ jsMmenu.insertAdjacentHTML("afterbegin", postItem);
 
 const currentTheme = localStorage.getItem("currentTheme");
 
-if (!currentTheme) {
-  changeTheme(Theme.DARK, Theme.LIGHT);
-}
-
-if (currentTheme === `${Theme.DARK}`) {
+if (currentTheme === Theme.DARK) {
   changeTheme(Theme.LIGHT, Theme.DARK);
 } else {
   changeTheme(Theme.DARK, Theme.LIGHT);
@@ -31,7 +27,7 @@ themeSwitchToggle.addEventListener("click", hendelThemeToggle);
 
 function hendelThemeToggle() {
   const currentTheme = localStorage.getItem("currentTheme");
-  if (currentTheme === `${Theme.DARK}`) {
+  if (currentTheme === Theme.DARK) {
     changeTheme(Theme.DARK, Theme.LIGHT);
   } else {
     changeTheme(Theme.LIGHT, Theme.DARK);
@@ -39,8 +35,8 @@ function hendelThemeToggle() {
 }
 
 function changeTheme(oldTheme, newTheme) {
-  body.classList.remove(`${oldTheme}`);
-  body.classList.add(`${newTheme}`);
-  localStorage.setItem("currentTheme", `${newTheme}`);
+  body.classList.remove(oldTheme);
+  body.classList.add(newTheme);
+  localStorage.setItem("currentTheme", newTheme);
   themeSwitchToggle.checked = newTheme === Theme.DARK;
 }
